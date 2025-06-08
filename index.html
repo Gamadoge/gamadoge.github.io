@@ -86,7 +86,8 @@
                     var text = this.add.text(rect.x + 200, rect.y + 15, 'Gamadoge', {fontSize: '65px', fontFamily: 'EduSAHand', color: '#ffffff', align: 'center', stroke: '#0000000', strokeThickness: 5});
                     text.setOrigin(0, 0);
 
-                    var icon = this.add.image(0, 0, 'icon');
+                    var icon = this.add.image(rect.x + 5, rect.y + 5, 'icon');
+                    icon.scaleX = icon.scaleY = 0.25;
                     icon.setOrigin(0, 0);
                 }
             }
