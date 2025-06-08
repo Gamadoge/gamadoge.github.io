@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>About Me - Gamadoge!</title>
+        <link rel="icon" type="image/x-icon" href="me.png"/>
+    </head>
+
+    <body style="background-color:black;">
+        <script type="module">
+            import * as Phaser from 'https://cdn.jsdelivr.net/npm/phaser/dist/phaser.esm.min.js';
+
+            var screen =
+            {
+                width: 1280, height: 720, window: null,
+                centerObject: function(object, axes = 'XY')
+                {
+                    axes = axes.toLowerCase();
+                    if (axes.includes('x')) object.x = (screen.width - object.displayWidth) / 2;
+                    if (axes.includes('y')) object.y = (screen.height - object.displayHeight) / 2;
+                }
+            };
+
+            window.addEventListener('load', function()
+            {
+                // console.log = (log) => { alert(log); };
+                
+                screen.window = new Phaser.Game
+                ({
+                    title: "About Me - Gamadoge!",
+                    width: screen.width,//window.innerWidth * 3,
+                    height: screen.height,//window.innerHeight * 3,
+                    parent: 'app',
+                    scene: [Test],
+                    backgroundColor: '#ffffff',
+                    autoFocus: false,
+                    autoCenter: Phaser.Scale.CENTER_BOTH
+                });
+
+                console.log('a');
+
+                if (navigator.userAgentData) {
+                    console.log('b');
+                    navigator.userAgentData.getHighEntropyValues(["platformVersion"]).then((ua) =>
+                    {
+                        console.log("Platform version:", ua.platformVersion);
+                    });
+                }
+            });
+
+            class Test extends Phaser.Scene
+            {
+                constructor() { super('Test'); }
+
+                preload()
+                {
+                    this.load.image('pixel', 'pixel.png');
+                    this.load.font('EduSAHand', 'EduSAHand.ttf');
+                    this.load.image('icon', 'me.png');
+                }
+
+                create()
+                {
+                    // super.create()
+                    var bg = this.add.image(0, 0, "pixel");
+                    bg.setOrigin(0, 0);
+                    bg.displayWidth = screen.width;
+                    bg.displayHeight = screen.height;
+                    // bg.scaleX = bg.scaleY = 10;
+                    //bg.setTint(0xff000000);
+                    
+                    screen.centerObject(bg);
+
+                    var grad = bg.preFX.addGradient();
+                    grad.color1 = 0xff00328a;
+                    grad.color2 = 0xff600074;
+                    // grad.angle = 90;
+
+                    var rect = this.add.rectangle(0, 0, screen.width / 2, screen.width / 2.25, 0xff2e2e2e, 1);
+                    rect.setOrigin(0, 0);
+                    rect.setRounded(20);
+                    screen.centerObject(rect);
+
+                    var text = this.add.text(rect.x + 200, rect.y + 15, 'Gamadoge', {fontSize: '65px', fontFamily: 'EduSAHand', color: '#ffffff', align: 'center', stroke: '#0000000', strokeThickness: 5});
+                    text.setOrigin(0, 0);
+
+                    var icon = this.add.image(0, 0, 'icon');
+                    icon.setOrigin(0, 0);
+                }
+            }
+        </script>
+    </body>
+</html>
